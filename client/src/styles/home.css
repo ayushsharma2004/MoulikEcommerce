@@ -1,0 +1,88 @@
+.home {
+    width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box;
+}
+
+.banner {
+    width: 100vw;
+    height: 70vh;
+    object-fit: cover;
+}
+
+.best_seller {
+    width: 100vw !important;
+    height: 100vh !important;
+    margin-top: 10vh;
+    padding: 1vw;
+}
+
+.best_seller h2 {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.best_seller .cards {
+    width: 100vw;
+    margin-top: 10vh;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5vw;
+}
+
+.best_seller .cards .card {
+    width: 18vw;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.card .crdimg {
+    width: 18vw;
+    height: 40h;
+    display: flex;
+    overflow: hidden;
+}
+
+.crdimg img {
+    width: 18vw;
+    height: 40vh;
+    object-fit: cover;
+}
+
+.crd_content {
+    width: 18vw;
+    height: 20vh;
+    display: flex;
+    padding: 1vh 1vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.crd_name {
+    line-height: normal;
+    font-size: 2.4vh;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif !important;
+    font-optical-sizing: auto;
+    font-weight: 300 !important;
+    font-style: normal;
+
+}
+
+.lato-regular {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.lato-bold {
+    font-family: "Lato", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
