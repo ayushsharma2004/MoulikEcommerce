@@ -9,3 +9,12 @@
 html {
   line-height: normal !important;
 }
+
+body {
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+.underroot {
+  width: 100vw;
+}

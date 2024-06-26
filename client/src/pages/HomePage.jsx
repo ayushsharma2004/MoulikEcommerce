@@ -5,7 +5,7 @@ import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Prices.js";
 import banner1 from '../images/banner4hd.jpeg'
-import p1 from '../images/polo2.jpg'
+import p1 from '../images/polo3.jpg'
 import '../styles/home.css'
 
 const HomePage = () => {
@@ -129,6 +129,162 @@ const HomePage = () => {
         <div className="best_seller">
           <h2>BEST SELLERS</h2>
           <div className="cards">
+            <div className="card">
+              <div className="crdimg">
+                <img src={p1} alt="" />
+              </div>
+              <div className="crd_content">
+                <h3 className="crd_name">Blue Indigo Polo T-shirt</h3>
+                <div className="crd_rating">
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                </div>
+                <p className="crd_price">₹799.00</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="crdimg">
+                <img src={p1} alt="" />
+              </div>
+              <div className="crd_content">
+                <h3 className="crd_name">Blue Indigo Polo T-shirt</h3>
+                <div className="crd_rating">
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                </div>
+                <p className="crd_price">₹799.00</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="crdimg">
+                <img src={p1} alt="" />
+              </div>
+              <div className="crd_content">
+                <h3 className="crd_name">Blue Indigo Polo T-shirt</h3>
+                <div className="crd_rating">
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                </div>
+                <p className="crd_price">₹799.00</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="crdimg">
+                <img src={p1} alt="" />
+              </div>
+              <div className="crd_content">
+                <h3 className="crd_name">Blue Indigo Polo T-shirt</h3>
+                <div className="crd_rating">
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                </div>
+                <p className="crd_price">₹799.00</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="crdimg">
+                <img src={p1} alt="" />
+              </div>
+              <div className="crd_content">
+                <h3 className="crd_name">Blue Indigo Polo T-shirt</h3>
+                <div className="crd_rating">
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                </div>
+                <p className="crd_price">₹799.00</p>
+              </div>
+            </div>
+            <div className="card">
+              <div className="crdimg">
+                <img src={p1} alt="" />
+              </div>
+              <div className="crd_content">
+                <h3 className="crd_name">Blue Indigo Polo T-shirt</h3>
+                <div className="crd_rating">
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined">
+                    star
+                  </span>
+                </div>
+                <p className="crd_price">₹799.00</p>
+              </div>
+            </div>
             <div className="card">
               <div className="crdimg">
                 <img src={p1} alt="" />

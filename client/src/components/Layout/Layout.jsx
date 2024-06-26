@@ -7,7 +7,7 @@ import { Toaster } from 'react-hot-toast';
 
 const Layout = ({ children, title, description, keywords, author }) => {
   return (
-    <div>
+    <div className='underroot'>
       <Helmet>
         <meta charSet="utf-8" />
         <meta name="description" content={description} />
@@ -16,7 +16,7 @@ const Layout = ({ children, title, description, keywords, author }) => {
         <title>{title}</title>
       </Helmet>
       <Header />
-      <main style={{ minHeight: '70vh' }}>
+      <main style={{}}>
         <Toaster />
         {children}
       </main>

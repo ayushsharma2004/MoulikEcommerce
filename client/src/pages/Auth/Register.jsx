@@ -2,20 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import { auth, RecaptchaVerifier, signInWithPhoneNumber } from '../../DB/FirebaseAuth.js';
 import Layout from '../../components/Layout/Layout.jsx';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/auth.js';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
-import { faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faPhone, faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import '../../styles/register.css';
 
-const RegisterEmail = () => {
-    const [fname, setFname] = useState('');
-    const [lname, setLname] = useState('');
-    const [phone, setPhone] = useState('');
-    const [otp, setOtp] = useState('');
-    const [user, setUser] = useState(null);
+const Register = () => {
+    var fname, lname, phone, otp, userVerify, uid, displayName, createdAt, lastLoginAt;
     const [btnText, setBtnText] = useState('Get OTP');
+    const [user, setUser] = useAuth();
+    const navigate = useNavigate();
 
 
     const recaptchaRef = useRef(null);
@@ -35,22 +34,24 @@ const RegisterEmail = () => {
                 console.log('Recaptcha render error:', error);
             });
         }
-    }, []);
+    }, [user]);
 
     const sendOtp = async (e) => {
         e.preventDefault();
         try {
             var otpInput = document.getElementById('otp');
-            var phoneNumber;
-            console.log(fname);
-            console.log(phone);
-            console.log(phoneNumber);
+            fname = document.getElementById('fname').value;
+            lname = document.getElementById('lname').value;
+            phone = document.getElementById('phone').value;
+            var phoneNumber = '+91' + phone;
             const recaptcha = recaptchaRef.current;
             const confirmation = await signInWithPhoneNumber(auth, phoneNumber, recaptcha);
-            setUser(confirmation);
+            // setUser(confirmation);
+            userVerify = confirmation;
             setBtnText('Verify OTP');
             setOnClickHandler(() => verifyOtp);
             otpInput.style.pointerEvents = 'auto';
+            otpInput.style.opacity = '1';
         } catch (error) {
             console.log(error);
         }
@@ -59,13 +60,47 @@ const RegisterEmail = () => {
     const verifyOtp = async (e) => {
         e.preventDefault();
         try {
-            const data = await user.confirm(otp);
+            otp = document.getElementById('otp').value;
+            const data = await userVerify.confirm(otp);
+            data.uid = data.user.uid;
+            uid = data.uid;
+            data.phone = data.user.phoneNumber;
+            phone = data.user.phoneNumber;
+            data.displayName = fname + ' ' + lname;
+            displayName = fname + ' ' + lname;
+            data.createdAt = data.user.metadata.createdTime;
+            createdAt = data.user.metadata.createdAt;
+            data.lastLoginAt = data.user.metadata.lastLoginAt;
+            lastLoginAt = data.user.metadata.lastLoginAt;
             console.log(data);
+            console.log(`${process.env.REACT_APP_API}/api/v1/auth/register-user`);
+            const res = await axios.post(
+                `${process.env.REACT_APP_API}/api/v1/auth/register-user`,
+                { displayName, phone, uid, createdAt, lastLoginAt }
+            );
+            if (res && res.data.success) {
+                toast.success(res.data.message, { duration: 3000 });
+                setUser({
+                    ...user,
+                    user: res.data.user,
+                    token: res.data.token,
+                });
+                localStorage.setItem('auth', JSON.stringify(res.data));
+            }
             setBtnText('Get OTP');
             setOnClickHandler(() => sendOtp);
+            navigate('/');
         } catch (error) {
             console.log(error);
         }
+    }
+
+    const toLogin = () => {
+        navigate('/login');
+    }
+
+    const toSeller = () => {
+        navigate('/register/seller')
     }
 
     const [onClickHandler, setOnClickHandler] = useState(() => sendOtp);
@@ -81,21 +116,14 @@ const RegisterEmail = () => {
                         <h4>First Name</h4>
                         <input
                             id='fname'
-                            type="email"
-                            onChange={(e) => {
-                                setFname(e.target.value);
-                            }}
+                            type="text"
                             placeholder='' />
                     </div>
                     <div className="inpbar">
                         <h4>Last Name</h4>
                         <input
-                            value={lname}
-                            onChange={(e) => {
-                                setLname(e.target.value);
-                            }}
                             id='lname'
-                            type="email"
+                            type="text"
                             placeholder='' />
                     </div>
                     <div className="inpbar">
@@ -104,11 +132,6 @@ const RegisterEmail = () => {
                             id='phone'
                             type="tel"
                             pattern='[0-9]{10}'
-                            value={phone}
-                            onChange={(e) => {
-                                setPhone(e.target.value);
-                                console.log(e.target.value);
-                            }}
                             placeholder='' />
                     </div>
                     <div id='recaptcha'></div>
@@ -118,32 +141,39 @@ const RegisterEmail = () => {
                             id='otp'
                             type="text"
                             pattern='[0-9]{6}'
-                            value={otp}
-                            onChange={(e) => {
-                                setOtp(e.target.value);
-                            }}
                             placeholder='' />
                     </div>
                     <button className='reg_btn' onClick={onClickHandler}>
                         {btnText}
                     </button>
                 </form>
-                <h3 className='log_text'><Link className='link_log' to='/login'>Already have a account? Login</Link></h3>
-                <button className='signin_google'>
-                    <button className="google_text">Sign in with Google</button>
-                    <button className="google_icon_btn">
-                        <FontAwesomeIcon className='google_icon' icon={faGoogle} />
-                    </button>
-                </button>
-                <button className='signin_phone'>
-                    <button className="phone_text">Sign in with Phone Number</button>
-                    <button className="phone_icon_btn">
+                <div className="divider-container">
+                    <div className="line"></div>
+                    <span className="divider-text">Already have a account?</span>
+                    <div className="line"></div>
+                </div>
+                <div className='signin_phone'>
+                    <button className="phone_text" onClick={toLogin}>Sign in with Phone Number</button>
+                    <button className="phone_icon_btn" onClick={toLogin}>
                         <FontAwesomeIcon className='phone_icon' icon={faPhone} />
                     </button>
-                </button>
+                </div>
+
+                <div className="divider-container">
+                    <div className="sellerline"></div>
+                    <span className="divider-text">Planning to sell?</span>
+                    <div className="sellerline"></div>
+                </div>
+                <div className='signin_seller'>
+                    <button className="seller_text" onClick={toSeller}>Create a seller's account</button>
+                    <button className="seller_icon_btn" onClick={toSeller}>
+                        <FontAwesomeIcon className='seller_icon' icon={faBagShopping} />
+                    </button>
+                </div>
+
             </div>
         </Layout>
     );
 };
 
-export default RegisterEmail;
+export default Register;

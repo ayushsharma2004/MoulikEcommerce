@@ -5,6 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 }
 
 .offer_marquee h5 {
@@ -28,6 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 }
 
 .sliding-text {
@@ -57,6 +59,7 @@
     background-color: #f6f8f8;
     display: flex;
     align-items: center;
+    z-index: 10;
 }
 
 .navbar1 .logo {

@@ -34,10 +34,10 @@ const Header = () => {
   }, [isRegistered, navigate]);
   return (
     <>
-      <div className="marquee">
+      <div id='marquee1' className="marquee">
         <p className="sliding-text">This is sliding text created with CSS animations for better accessibility.</p>
       </div>
-      <div className="navbar1">
+      <div id='navbar1' className="navbar1">
         <div className="logo">
           <img src={logo1} alt="" />
         </div>
@@ -46,13 +46,13 @@ const Header = () => {
             <input className='srch1' type="text" placeholder='Search for t-shirts, polos and more' />
           </div>
           <button className='srch1btn'>
-            <span class="material-symbols-outlined">
+            <span className="material-symbols-outlined">
               search
             </span>
           </button>
         </div>
         <ul className='right_nav'>
-          <li className='cat_li'><Link className='link_cats' to="#">Category &nbsp;<b><i class="fas fa-caret-down"></i></b></Link>
+          <li className='cat_li'><Link className='link_cats' to="#">Category &nbsp;<b><i className="fas fa-caret-down"></i></b></Link>
             <ul>
               <li><Link className='link_cat' to="#">T-shirts</Link></li>
               <li><Link className='link_cat' to="#">Polos</Link></li>
@@ -63,7 +63,7 @@ const Header = () => {
             <Link className='login_link' to='/login'>Login</Link>
           </li>
           <li>
-            <span class="material-symbols-outlined">
+            <span className="material-symbols-outlined">
               shopping_cart
             </span>
           </li>

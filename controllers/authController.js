@@ -2,6 +2,7 @@ import { db } from '../DB/firestore.js';
 import { comparePassword, hashPassword } from '../helper/authHelper.js';
 import JWT from 'jsonwebtoken';
 import { admin } from '../DB/firestore.js';
+import { createData, readSingleData } from '../helper/crumd.js';
 
 export const verifyPhoneNumber = async (req, res) => {
   const { phoneNumber } = req.body;
@@ -16,100 +17,163 @@ export const verifyPhoneNumber = async (req, res) => {
   }
 };
 
-export const registerController = async (req, res) => {
+export const userRegisterController = async (req, res) => {
   try {
-    const { name, email, password, phone, address, answer } = req.body;
-    if (!name) {
-      return res.send({ message: 'Name is required' });
-    }
-    if (!email) {
-      return res.send({ message: 'Email is required' });
-    }
-    if (!password) {
-      return res.send({ message: 'Password is required' });
+    const { displayName, phone, uid, createdAt, lastLoginAt } = req.body;
+    if (!displayName) {
+      return res.send({ message: 'displayName is required' });
     }
     if (!phone) {
       return res.send({ message: 'Phone is required' });
     }
-    if (!address) {
-      return res.send({ message: 'Address is required' });
+    if (!uid) {
+      return res.send({ message: 'uid is required' });
     }
-    if (!answer) {
-      return res.send({ message: 'Answer is required' });
+    if (!createdAt) {
+      return res.send({ message: 'createdAt is required' });
     }
-
+    if (!lastLoginAt) {
+      return res.send({ message: 'lastLoginAt is required' });
+    }
+    var querySnapshot = null;
     //existing user
-    const querySnapshot = await db
-      .collection(process.env.collectionName)
-      .where('email', '==', email)
-      .get();
-    if (!querySnapshot.empty) {
+    querySnapshot = await readSingleData(process.env.userCollection, uid);
+    console.log(querySnapshot);
+    if (querySnapshot) {
       return res.status(200).send({
         success: false,
         message: 'User already registered. Please login.',
       });
     }
-    //register user
-    const hashedPassword = await hashPassword(password);
 
     const userJson = {
-      name: name,
-      email: email,
-      password: hashedPassword,
+      displayName: displayName,
       phone: phone,
-      address: address,
-      answer: answer,
+      uid: uid,
+      address: '',
+      photoUrl: '',
+      orders: [],
+      cart: [],
       role: 0,
+      createdAt: createdAt,
+      lastLoginAt: lastLoginAt
     };
-    const userId = email; // Use email as the document ID
 
-    if (typeof hashedPassword !== 'string') {
-      return res.status(500).send({
-        success: false,
-        message: 'Error in registration: Invalid password',
-      });
-    }
+    //token
+    const token = await JWT.sign(
+      { _id: uid },
+      process.env.JWT_token,
+      {
+        expiresIn: '7d',
+      }
+    );
 
-    await db.collection(process.env.collectionName).doc(userId).set(userJson);
+    var creation = await createData(process.env.userCollection, uid, userJson)
     console.log('success');
 
     return res.status(201).send({
       success: true,
       message: 'User registered successfully',
       user: userJson,
+      token
     });
   } catch (error) {
-    console.error('Error in registration:', error);
+    console.error('Error in user registration:', error);
     return res.status(500).send({
       success: false,
-      message: 'Error in registration',
+      message: 'Error in user registration',
       error: error.message,
     });
   }
 };
 
-//Login User
-export const loginController = async (req, res) => {
+//register seller
+export const sellerRegisterController = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { displayName, phone, uid, address, createdAt, lastLoginAt } = req.body;
+    if (!displayName) {
+      return res.send({ message: 'displayName is required' });
+    }
+    if (!phone) {
+      return res.send({ message: 'Phone is required' });
+    }
+    if (!uid) {
+      return res.send({ message: 'uid is required' });
+    }
+    if (!address) {
+      return res.send({ message: 'address is required' });
+    }
+    if (!createdAt) {
+      return res.send({ message: 'createdAt is required' });
+    }
+    if (!lastLoginAt) {
+      return res.send({ message: 'lastLoginAt is required' });
+    }
+
+    //existing user
+    const querySnapshot = await readSingleData(process.env.sellerCollection, uid);
+    if (querySnapshot) {
+      return res.status(200).send({
+        success: false,
+        message: 'Seller already registered. Please login.',
+      });
+    }
+
+    const sellerJson = {
+      displayName: displayName,
+      phone: phone,
+      uid: uid,
+      address: address,
+      photoUrl: [],
+      orders: [],
+      cart: [],
+      role: 1,
+    };
+
+    //token
+    const token = await JWT.sign(
+      { _id: uid },
+      process.env.JWT_token,
+      {
+        expiresIn: '7d',
+      }
+    );
+
+    var creation = await createData(process.env.sellerCollection, uid, sellerJson)
+    console.log('success');
+
+    return res.status(201).send({
+      success: true,
+      message: 'Seller registered successfully',
+      user: sellerJson,
+      token
+    });
+  } catch (error) {
+    console.error('Error in seller registration:', error);
+    return res.status(500).send({
+      success: false,
+      message: 'Error in seller registration',
+      error: error.message,
+    });
+  }
+};
+
+
+//Login User
+export const userLoginController = async (req, res) => {
+  try {
+    const { uid } = req.body;
     //Validtion
-    if (!email || !password) {
+    if (!uid) {
       return res.status(404).send({
         success: false,
-        message: 'Invalid email or password',
+        message: 'Invalid user',
       });
     }
     //Retrieve user data
-    const querySnapshot = await db
-      .collection(process.env.collectionName)
-      .where('email', '==', email)
-      .get();
-    let userData = null;
-    querySnapshot.forEach((doc) => {
-      userData = doc.data();
-    });
+    const userData = await readSingleData(process.env.userCollection, uid);
 
-    //validating user
+    //verification
     if (!userData) {
       return res.status(404).send({
         success: false,
@@ -117,19 +181,9 @@ export const loginController = async (req, res) => {
       });
     }
 
-    //comparing user password with hashed/encrypted password
-    const match = await comparePassword(password, userData.password);
-    //verifying password
-    if (!match) {
-      return res.status(200).send({
-        success: false,
-        message: 'Invalid Password',
-      });
-    }
-
     //token
     const token = await JWT.sign(
-      { _id: userData.email },
+      { _id: userData.uid },
       process.env.JWT_token,
       {
         expiresIn: '7d',
@@ -137,11 +191,12 @@ export const loginController = async (req, res) => {
     );
     res.status(200).send({
       success: true,
-      message: 'Login successfully',
+      message: 'User Login successfully',
       user: {
-        name: userData.name,
-        email: userData.email,
+        displayName: userData.displayName,
+        uid: userData.uid,
         phone: userData.phone,
+        photoUrl: userData.photoUrl,
         address: userData.address,
         role: userData.role,
       },
@@ -152,66 +207,61 @@ export const loginController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: 'Error in login',
+      message: 'Error in user login',
       error: error,
     });
   }
 };
 
-//forgotPasswordController
-export const forgotPasswordController = async (req, res) => {
+//Login User
+export const sellerLoginController = async (req, res) => {
   try {
-    const { email, answer, newPassword } = req.body;
-
-    //validation
-    if (!email) {
-      res.status(400).send({ message: 'Email is required' });
+    const { uid } = req.body;
+    //Validtion
+    if (!uid) {
+      return res.status(404).send({
+        success: false,
+        message: 'Invalid seller',
+      });
     }
-    if (!answer) {
-      res.status(400).send({ message: 'Email is required' });
-    }
-    if (!newPassword) {
-      res.status(400).send({ message: 'Email is required' });
-    }
+    //Retrieve user data
+    const userData = await readSingleData(process.env.sellerCollection, uid);
 
-    //retrive user data
-    const querySnapshot = await db
-      .collection(process.env.collectionName)
-      .where('email', '==', email)
-      .where('answer', '==', answer)
-      .get();
-
-    let userData = null;
-    querySnapshot.forEach((doc) => {
-      userData = doc.data();
-    });
-
-    //validating user
+    //verification
     if (!userData) {
       return res.status(404).send({
         success: false,
-        message: 'Wrong email or answer',
+        message: 'seller is not registered',
       });
     }
 
-    //hashing password
-    const hashed = await hashPassword(newPassword);
-
-    //update password
-    const docRef = db
-      .collection(process.env.collectionName)
-      .doc(userData.email);
-    await docRef.update({ password: hashed });
-
+    //token
+    const token = await JWT.sign(
+      { _id: userData.uid },
+      process.env.JWT_token,
+      {
+        expiresIn: '7d',
+      }
+    );
     res.status(200).send({
       success: true,
-      message: 'Password Updated Successfully',
+      message: 'seller Login successfully',
+      user: {
+        displayName: userData.displayName,
+        uid: userData.uid,
+        phone: userData.phone,
+        photoUrl: userData.photoUrl,
+        address: userData.address,
+        role: userData.role,
+      },
+      token,
     });
+    console.log('success');
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: 'Something went wrong',
+      message: 'Error in user login',
       error: error,
     });
   }

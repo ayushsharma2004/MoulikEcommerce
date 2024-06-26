@@ -1,18 +1,18 @@
 .home {
     width: 100vw !important;
-    overflow-x: hidden !important;
     box-sizing: border-box;
 }
 
 .banner {
-    width: 100vw;
+    width: inherit;
     height: 70vh;
-    object-fit: cover;
+    /* object-fit: cover; */
 }
 
+/* 
 .best_seller {
     width: 100vw !important;
-    height: 100vh !important;
+    height: 100% !important;
     margin-top: 10vh;
     padding: 1vw;
 }
@@ -31,25 +31,27 @@
     margin-top: 10vh;
     display: flex;
     flex-wrap: wrap;
-    gap: 5vw;
+    justify-content: flex-start;
+    gap: 1vw;
 }
 
 .best_seller .cards .card {
     width: 18vw;
-    height: 60vh;
+    height: 59vh;
     display: flex;
+    flex: 0 0 10rem;
     flex-direction: column;
 }
 
 .card .crdimg {
-    width: 18vw;
+    width: 19vw;
     height: 40h;
     display: flex;
     overflow: hidden;
 }
 
 .crdimg img {
-    width: 18vw;
+    width: 19vw;
     height: 40vh;
     object-fit: cover;
 }
@@ -58,7 +60,7 @@
     width: 18vw;
     height: 20vh;
     display: flex;
-    padding: 1vh 1vw;
+    padding: 2vh 1.5vw;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -66,13 +68,97 @@
 
 .crd_name {
     line-height: normal;
-    font-size: 2.4vh;
+    font-size: 2.26vh;
     text-transform: uppercase;
     font-family: "Montserrat", sans-serif !important;
     font-optical-sizing: auto;
     font-weight: 300 !important;
     font-style: normal;
 
+} */
+.best_seller {
+    width: 100vw;
+    height: 100%;
+    margin-top: 10vh;
+    padding: 1vw;
+}
+
+.best_seller h2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.best_seller .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding: 1vw;
+    /* Ensure exactly 5 cards per row */
+    /* Adjust min-width as needed */
+    gap: 1vw;
+    margin-top: 7vh;
+}
+
+.best_seller .card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 10px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    overflow: hidden;
+}
+
+.best_seller .crdimg {
+    width: 100%;
+    height: 0;
+    padding-top: 100%;
+    /* 4:3 Aspect Ratio */
+    position: relative;
+}
+
+.best_seller .crdimg img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.best_seller .crd_content {
+    padding: 0.5vh 0.5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.best_seller .crd_name {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+}
+
+.best_seller .crd_rating {
+    display: flex;
+    justify-content: center;
+    margin: 0.1rem 0;
+}
+
+.best_seller .material-symbols-outlined {
+    font-size: 1.2rem;
+    color: #FFD700;
+    /* Gold color for stars */
+}
+
+.best_seller .crd_price {
+    font-size: 1.1rem;
+    color: #333;
+    margin-top: 0.1rem;
 }
 
 .lato-regular {

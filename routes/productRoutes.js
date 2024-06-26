@@ -25,8 +25,6 @@ const router = express.Router();
 router.post(
   '/create-product',
   requireSignIn,
-  isAdmin,
-  formidable(),
   createProductController
 );
 
@@ -35,7 +33,6 @@ router.put(
   '/update-product/:slug',
   requireSignIn,
   isAdmin,
-  formidable(),
   updateProductController
 );
 

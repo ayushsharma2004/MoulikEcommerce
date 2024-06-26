@@ -1,10 +1,11 @@
 import express from 'express';
 import {
-  loginController,
-  registerController,
   testController,
-  forgotPasswordController,
   verifyPhoneNumber,
+  userRegisterController,
+  userLoginController,
+  sellerRegisterController,
+  sellerLoginController,
 } from '../controllers/authController.js';
 import { isAdmin, requireSignIn } from '../middleware/authMiddleware.js';
 // import { create } from '../DB/FCRUD.js';
@@ -17,15 +18,17 @@ const router = express.Router();
 //Verify Phone Number || POST
 router.post('/verify', verifyPhoneNumber);
 
-//Register || POST
-router.post('/register', registerController);
+//Register User || POST
+router.post('/register-user', userRegisterController);
 
-//Login || POST
-router.post('/login', loginController);
-// router.post('/create', create);
+//Register Seller || POST
+router.post('/register-seller', sellerRegisterController);
 
-//Forgot Password
-router.post('/forgot-password', forgotPasswordController);
+//Login User || POST
+router.post('/login-user', userLoginController);
+
+//Login Seller || POST
+router.post('/login-seller', sellerLoginController);
 
 //test route
 router.get('/test', requireSignIn, isAdmin, testController);

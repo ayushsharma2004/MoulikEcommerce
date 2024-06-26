@@ -23,15 +23,19 @@ import ProductDetails from "./pages/ProductDetails.jsx";
 import Categories from "./pages/Categories.jsx";
 import CategoryProduct from "./pages/CategoryProduct.jsx";
 import Header from "./components/Layout/Header.jsx";
+import RegisterSeller from "./pages/Auth/RegisterSeller.jsx";
+import LoginSeller from "./pages/Auth/LoginSeller.jsx";
+import Cart from "./pages/Cart.jsx";
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/product/:slug" element={<ProductDetails />} />
+        <Route path="/product" element={<ProductDetails />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/category/:slug" element={<CategoryProduct />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/dashboard" element={<PrivateRoute />}>
           <Route path="user" element={<Dashboard />} />
           <Route path="user/orders" element={<Orders />} />
@@ -46,8 +50,10 @@ function App() {
           <Route path="admin/users" element={<Users />} />
         </Route>
         <Route path="/register" element={<Register />} />
+        <Route path="/register/seller" element={<RegisterSeller />} />
         <Route path="/forgot-password" element={<ForgotPasssword />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/login/seller" element={<LoginSeller />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/policy" element={<Policy />} />

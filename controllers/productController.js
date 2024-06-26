@@ -1,77 +1,75 @@
-import { db } from '../DB/firestore.js';
+import { db, admin } from '../DB/firestore.js';
 import slugify from 'slugify';
 import fs from 'fs';
+import multer from "multer";
 import { log } from 'console';
+
+const bucket = admin.storage().bucket();
+const upload = multer({ storage: multer.memoryStorage() });
 
 export const createProductController = async (req, res) => {
   try {
-    const { name, slug, description, price, category, quantity, shipping } =
-      req.fields;
-    const { photo } = req.files;
+    upload.array('images')(req, res, async (err) => {
+      if (err) {
+        return res.status(500).send({ success: false, message: 'Error uploading files' });
+      }
 
-    //validation
-    switch (true) {
-      case !name:
-        return res.status(500).send({ error: 'Name is Required' });
-      case !description:
-        return res.status(500).send({ error: 'Description is Required' });
-      case !price:
-        return res.status(500).send({ error: 'Price is Required' });
-      case !category:
-        return res.status(500).send({ error: 'Category is Required' });
-      case !quantity:
-        return res.status(500).send({ error: 'Quantity is Required' });
-      case photo && photo.size > 100000:
-        return res
-          .status(500)
-          .send({ error: 'Photo is Required and should be less than 1mb' });
-    }
+      const { pid, name, price, brand, seller, colors, sizes, availability, about, category } = req.body;
+      const files = req.files;
 
-    // Create Products
-    const products = {
-      ...req.fields,
-      price: parseInt(price),
-      slug: slugify(name),
-    };
+      if (!files || files.length === 0) {
+        return res.status(400).send({ success: false, message: 'No files uploaded' });
+      }
 
-    // Check if the 'photo' property exists in the 'products' object
-    if (photo) {
-      // Read file data as a Buffer
-      const fileData = fs.readFileSync(photo.path);
-      // Include relevant file information in 'products'
-      products.photo = {
-        data: fileData,
-        contentType: photo.type,
-      };
-    }
+      try {
+        const urls = await Promise.all(files.map(async (file) => {
+          const fileName = `${pid}/${file.originalname}`;
+          const blob = bucket.file(fileName);
+          const blobStream = blob.createWriteStream({
+            metadata: {
+              contentType: file.mimetype,
+              acl: 'public-read',
+            },
+          });
 
-    await db.collection(process.env.collectionProduct).doc(name).set(products);
-    res.status(201).send({
-      success: true,
-      message: 'New Product created',
-      products,
+          return new Promise((resolve, reject) => {
+            blobStream.on('error', (error) => reject(error));
+            blobStream.on('finish', async () => {
+              const publicUrl = `https://storage.googleapis.com/products/${seller.sid}/${bucket.name}/${blob.name}`;
+              resolve(publicUrl);
+            });
+            blobStream.end(file.buffer);
+          });
+        }));
+
+        const product = {
+          pid,
+          name,
+          price,
+          brand,
+          seller,
+          colors,
+          sizes,
+          availability,
+          about,
+          category,
+          images: urls,
+        };
+
+        await db.collection('products').doc(pid).set(product);
+
+        res.status(200).send({ success: true, message: 'Product saved successfully!', product });
+      } catch (error) {
+        console.error('Error uploading files:', error);
+        res.status(500).send({ success: false, message: 'Internal server error' });
+      }
     });
-
-    //Existing user?
-    // const querySnapshot = await db
-    //   .collection(process.env.collectionCategory)
-    //   .where('name', '==', name)
-    //   .get();
-    // if (!querySnapshot.empty) {
-    //   return res.status(200).send({
-    //     success: true,
-    //     message: 'Category already exists',
-    //   });
-    // }
   } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: 'Error in product',
-      error: error,
-    });
+    console.error('Error in Firebase Storage:', error);
+    res.status(500).send({ success: false, message: 'Error in Firebase Storage', error });
   }
 };
+
 
 export const updateProductController = async (req, res) => {
   try {

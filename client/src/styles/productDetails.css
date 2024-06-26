@@ -1,0 +1,486 @@
+.product_container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.product_container .details_container {
+    width: 100vw;
+    display: flex;
+}
+
+.details_container .left_details {
+    width: 60vw;
+    height: 107vh;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+}
+
+.details_container .back_nav {
+    width: 60vw;
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    padding-left: 1vw;
+}
+
+.details_container .back_nav h4 {
+    font-size: 0.9rem;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    margin-bottom: 0 !important;
+}
+
+.details_container .back_nav h4 .back_link {
+    color: #333;
+    text-decoration: none;
+}
+
+.details_container .back_nav h4 .back_link .back_arrow {
+    font-size: 0.9rem;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    margin-bottom: 0 !important;
+    color: #333;
+    text-decoration: none;
+    margin-right: 1vh;
+}
+
+.details_container .photo_container {
+    width: 60vw;
+    height: 100vh;
+    display: flex;
+}
+
+.details_container .photo_sidebar {
+    width: 10vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    top: 0;
+    /* Stick to the top of the viewport */
+
+    /* Hides the scrollbar for Webkit browsers (e.g., Chrome, Safari) */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    gap: 2vh;
+}
+
+.details_container .photo_sidebar .pro_photo {
+    width: 6vw;
+    height: 13vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(235, 235, 235);
+    cursor: pointer;
+}
+
+.details_container .photo_sidebar .pro_photo img {
+    width: 5vw;
+    height: 11vh;
+    object-fit: cover;
+}
+
+.details_container .product_photo {
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.details_container .product_photo .main_photo {
+    width: 50vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(225, 225, 225);
+}
+
+.details_container .product_photo .main_photo img {
+    width: 49vw;
+    height: 99vh;
+    object-fit: cover;
+}
+
+.details_container .right_details {
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    padding: 7vh 1vw 1vh 4vw;
+}
+
+.details_container .right_details .main_details {
+    width: 35vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.details_container .right_details .product_name {
+    display: flex;
+}
+
+.details_container .right_details .product_name h3 {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 26px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 0.8rem;
+    /* Your desired text color */
+}
+
+.details_container .right_details .product_rate {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.details_container .right_details .star {
+    font-size: 1.1rem;
+    color: #FFD700;
+    /* background-color: #FFD700; */
+}
+
+.details_container .right_details .product_price {
+    display: flex;
+    align-items: center;
+    gap: 1vh;
+}
+
+.details_container .right_details .product_price h4 {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    font-weight: 400;
+    color: #555;
+    /* Your desired text color */
+}
+
+.details_container .right_details .product_price h5 {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgb(1, 163, 1);
+    /* Your desired text color */
+}
+
+.details_container .right_details .product_color {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.details_container .right_details .product_color .color_title {
+    display: flex;
+    align-items: center;
+}
+
+.details_container .right_details .product_color .color_title h3 {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+}
+
+.details_container .right_details .product_color .all_colors {
+    display: flex;
+    align-items: center;
+    gap: 1vh;
+}
+
+.details_container .right_details .product_color .color_container {
+    width: 2.6rem;
+    height: 2.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #666;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.details_container .right_details .product_color .color {
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    background-color: black;
+    cursor: pointer;
+}
+
+.details_container .right_details .product_color .color_container.active {
+    width: 2.8rem;
+    height: 2.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #222;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.details_container .right_details .product_color .color.active {
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 50%;
+    background-color: black;
+    cursor: pointer;
+}
+
+
+.details_container .right_details .product_size {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.details_container .right_details .product_size .size_title {
+    display: flex;
+    align-items: center;
+}
+
+.details_container .right_details .product_size .size_title h3 {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+}
+
+.details_container .right_details .product_size .all_size {
+    display: flex;
+    align-items: center;
+    gap: 1vh;
+}
+
+.details_container .right_details .product_size .size_container {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ddd;
+    cursor: pointer;
+}
+
+.details_container .right_details .product_size .size {
+    cursor: pointer;
+    margin-bottom: 0 !important;
+}
+
+.details_container .right_details .product_size .size_container.active {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #333;
+    cursor: pointer;
+}
+
+.details_container .right_details .product_size .size.active {
+    cursor: pointer;
+    margin-bottom: 0 !important;
+}
+
+.details_container .right_details .product_avail {
+    margin-top: 2vh;
+    display: flex;
+    align-items: center;
+}
+
+.details_container .right_details .product_avail h5 {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgb(1, 163, 1);
+    margin-bottom: 0 !important;
+    /* Your desired text color */
+}
+
+.details_container .right_details .offer_container {
+    margin-top: 4vh;
+    border-radius: 5px;
+}
+
+.details_container .right_details .offer_text {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    margin-bottom: 1vh !important;
+}
+
+.details_container .right_details .offer_cards {
+    display: flex;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    /* Hide scrollbar in Firefox */
+}
+
+.details_container .right_details .offer_cards::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar in Webkit browsers */
+}
+
+.details_container .right_details .offer_card {
+    min-width: 12vw;
+    height: 15vh;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.details_container .right_details .offer_card h4 {
+    font-size: 16px;
+    margin: 0;
+    color: #333;
+}
+
+.details_container .right_details .offer_card p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+.details_container .right_details .product_about {
+    margin-top: 4vh;
+}
+
+.details_container .right_details .about_title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.details_container .right_details .about_content {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.details_container .right_details .see_more {
+    color: #007BFF;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.details_container .right_details .product_category {
+    margin-top: 3.5vh;
+}
+
+.details_container .right_details .product_category h4 {
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: #333;
+    margin-bottom: 0 !important;
+}
+
+.details_container .right_details .product_quantity {
+    display: flex;
+    flex-direction: column;
+    margin: 3vh 0;
+}
+
+.details_container .right_details .product_quantity h3 {
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: #333;
+    margin-bottom: 0 !important;
+}
+
+.details_container .right_details .quantity_control {
+    margin-top: 2vh;
+    display: flex;
+    align-items: center;
+}
+
+.details_container .right_details .quantity_btn {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.details_container .right_details .quantity_input {
+    width: 4vw;
+    text-align: center;
+    margin: 0 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    appearance: textfield;
+    -moz-appearance: textfield;
+    /* For Firefox */
+    -webkit-appearance: none;
+    /* For Chrome, Safari, Edge, and Opera */
+}
+
+
+.details_container .right_details .quantity_input::-webkit-outer-spin-button,
+.quantity_input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.details_container .right_details .cart_btn {
+    margin-top: 2vh;
+    margin-right: 1vw;
+    margin-bottom: 2vh;
+    width: 33vw;
+    height: 7vh;
+    border: none;
+    outline: none;
+    font-size: 2.4vh;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+.details_container .right_details .cart_btn:hover {
+    background-color: rgb(27, 27, 27);
+}
+
+.details_container .right_details .buy_btn {
+    margin-top: 1vh;
+    margin-right: 1vw;
+    margin-bottom: 2vh;
+    width: 33vw;
+    height: 7vh;
+    border: none;
+    outline: none;
+    font-size: 2.4vh;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+.details_container .right_details .buy_btn:hover {
+    background-color: rgb(27, 27, 27);
+}

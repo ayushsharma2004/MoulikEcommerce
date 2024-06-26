@@ -24,6 +24,7 @@ const credential = {
 
 admin.initializeApp({
   credential: admin.credential.cert(credential),
+  storageBucket: process.env.storageBucket
 });
 
 const db = admin.firestore();

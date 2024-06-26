@@ -237,6 +237,62 @@
     }
 }
 
+
+.regis_container .signin_seller {
+    display: flex;
+    margin-bottom: 2vh;
+    width: 25vw;
+    height: 7vh;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    /* background-color: rgb(233, 0, 0, 0.75); */
+}
+
+.regis_container .signin_seller .seller_text {
+    width: 22vw;
+    height: 7vh;
+    border: none;
+    outline: none;
+    padding: 1vw;
+    display: flex;
+    align-items: center;
+    font-size: 2.4vh;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: rgba(128, 0, 128, 0.75);
+    cursor: pointer;
+}
+
+.regis_container .signin_seller .seller_icon_btn {
+    width: 3vw;
+    height: 7vh;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5vh;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: rgba(128, 0, 128, 0.6);
+    cursor: pointer;
+}
+
+.regis_container .signin_seller:hover {
+    .seller_text {
+        background-color: rgba(128, 0, 128, 0.65);
+    }
+
+    .seller_icon_btn {
+        background-color: rgba(128, 0, 128, 0.5);
+    }
+}
+
+
 .roboto-light {
     font-family: "Roboto", sans-serif;
     font-weight: 300;
@@ -260,4 +316,40 @@
     font-family: "Lato", sans-serif;
     font-weight: 300;
     font-style: normal;
+}
+
+
+
+
+
+
+
+.regis_container .divider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.regis_container .line {
+    width: 6vw;
+    flex-grow: 1;
+    height: 1px;
+    background-color: #000;
+    margin: 0 6px;
+    opacity: 0.5;
+}
+
+.regis_container .sellerline {
+    width: 8vw;
+    flex-grow: 1;
+    height: 1px;
+    background-color: #000;
+    margin: 0 6px;
+    opacity: 0.5;
+}
+
+.regis_container .divider-text {
+    font-size: 16px;
+    color: #000;
 }
